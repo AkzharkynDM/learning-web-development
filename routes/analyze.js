@@ -3,8 +3,7 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  var result=needed_reponse(req, res)
-  res.render('index', { title: result });
+  needed_response(req, res)
 });
 
 function needed_response(req, res){
@@ -31,6 +30,6 @@ for (let i=0;i<a.length;i++){
 }
 //b.sort(function(first, second) { return first > second ? 1 : -1});
 console.log(b);
-return b;
+res.json(b)
 }
 module.exports = router;
