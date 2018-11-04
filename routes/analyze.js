@@ -20,12 +20,17 @@ res.status(400).json({
 }
 
 function character_count(input){
+//TODO:I should consider upper and lower case also
 //[{"e":2},{"h":1},{"i":1},{"l":2},{"m":1},{"o":1},{"s":1},{"t":1}]
-dict=[];
-for letter in input{
-  dict[letter]=input.count(letter)
+var a = "acvbasbb";
+var b= {};
+for (let i=0;i<a.length;i++){
+    if((a.match(new RegExp(a[i], "g"))).length > 1){
+        b[a[i]]=(a.match(new RegExp(a[i], "g"))).length;
+    }
 }
-dict.sort()
-return dict;
+//b.sort(function(first, second) { return first > second ? 1 : -1});
+console.log(b);
+return b;
 }
 module.exports = router;
