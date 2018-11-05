@@ -2,13 +2,13 @@ var express = require('express');
 var router = express.Router();
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
+router.post('/', function(req, res, next) {
   needed_response(req, res)
 });
 
 function needed_response(req, res){
 var input=req.body.text
-console.log(input)
+console.log(req.body)
 var wordCount=input.split(" ").length;
 var withSpaces=input.length;
 var withoutSpaces=input.replace(/\s+/g, '').length;
@@ -29,7 +29,6 @@ for (let i=0;i<a.length;i++){
     }
 }
 //b.sort(function(first, second) { return first > second ? 1 : -1});
-console.log(b);
-res.json(b)
+return b
 }
 module.exports = router;
