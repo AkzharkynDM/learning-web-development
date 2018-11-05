@@ -9,7 +9,7 @@ router.post('/', function(req, res, next) {
 function needed_response(req, res){
 var input=req.body.text
 console.error(req.body)
-var wordCount=input.split(" ").length;
+var wordCount=input.split(/\s+/g).length;
 var withSpaces=input.length;
 var withoutSpaces=input.replace(/\s+/g, '').length;
 res.status(400).json({
@@ -21,11 +21,14 @@ res.status(400).json({
 function character_count(input){
 //TODO:I should consider upper and lower case also
 //[{"e":2},{"h":1},{"i":1},{"l":2},{"m":1},{"o":1},{"s":1},{"t":1}]
-var a = "acvbasbb";
+var a=input.replace(/\s+/g, '').toLowerCase()
 var b= {};
 for (let i=0;i<a.length;i++){
     if((a.match(new RegExp(a[i], "g"))).length > 1){
         b[a[i]]=(a.match(new RegExp(a[i], "g"))).length;
+    }
+    if((a.match(new RegExp(a[i], "g"))).length == 1){
+        b[a[i]]=1;
     }
 }
 //b.sort(function(first, second) { return first > second ? 1 : -1});
