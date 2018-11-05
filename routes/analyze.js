@@ -8,7 +8,7 @@ router.post('/', function(req, res, next) {
 
 function needed_response(req, res){
 var input=req.body.text
-console.log(req.body)
+console.error(req.body)
 var wordCount=input.split(" ").length;
 var withSpaces=input.length;
 var withoutSpaces=input.replace(/\s+/g, '').length;
