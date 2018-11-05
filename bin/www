@@ -5,7 +5,7 @@
  */
 
 var app = require('../app');
-var debug = require('debug')('dreambroker:server');
+var debug = require('debug')('start:server');
 var http = require('http');
 
 /**

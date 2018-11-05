@@ -7,7 +7,7 @@ router.get('/', function(req, res, next) {
 });
 
 function needed_response(req, res){
-var input=req.data
+var input=req.body.text
 console.log(input)
 var wordCount=input.split(" ").length;
 var withSpaces=input.length;

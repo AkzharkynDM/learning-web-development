@@ -3,6 +3,7 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('Welcome to my solution for task developed by Dream Broker', { title: result });
+  res.render('index', { title: 'my solution of task by Dream Broker' });
 });
+
 module.exports = router;
