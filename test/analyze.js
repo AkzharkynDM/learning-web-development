@@ -36,12 +36,12 @@ request(options, callback);
         chai.request(app)
             .get('/analyze')
             .end((err, res) => {
-                  res.should.have.status(500);
-                  res.body.length.should.be.eql(json({
+                  res.should.have.status(404);
+                  res.body.should.be.eql({
                     "textLength":{"withSpaces":15,"withoutSpaces":11},
                     "wordCount":3,
                     "characterCount":[{"e":2},{"h":1},{"i":1},{"l":2},{"m":1},{"o":1},{"s":1},{"t":1}]
-                  }));
+                  });
               done();
             });
       });
