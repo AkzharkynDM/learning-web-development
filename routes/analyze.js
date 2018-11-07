@@ -60,20 +60,30 @@ function character_count(input){
   if (isNaN(parseInt(input[i]))) {
     if((input.match(new RegExp(input[i], "g"))).length > 1){
       var element={letter:input[i], count:(input.match(new RegExp(input[i], "g"))).length};
-      if (!resultantList.includes(element))
+      if (resultantList.includes(element)) continue
         resultantList.push(element);
     }
     if((input.match(new RegExp(input[i], "g"))).length == 1){
       var element={letter:input[i], count:1};
-      if (!resultantList.includes(element))
+      if (resultantList.includes(element)) continue
         resultantList.push(element);
     }
     }
   }
+  for (let i=0;i<resultantList.length;i++){
+    console.log(resultantList[i].letter)
+  }
   resultantList.sort(function(first, second) {return first.letter > second.letter;});
 
-  return resultantList;
+  var resultantListNoDub = resultantList.reduce((unique, o) => {
+      if(!unique.some(obj => obj.letter === o.letter && obj.count === o.count)) {
+        unique.push(o);
+      }
+      return unique;
+  },[]);
+  return resultantListNoDub;
 
 }
+
 
 module.exports = router;
