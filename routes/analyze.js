@@ -9,29 +9,67 @@ router.post('/', function(req, res, next) {
 function needed_response(req, res){
 var input=req.body.text
 console.error(req.body)
-var wordCount=input.split(/\s+/g).length;
-var withSpaces=input.length;
-var withoutSpaces=input.replace(/\s+/g, '').length;
+
 res.status(400).json({
-  "textLength":{"withSpaces":withSpaces,"withoutSpaces":withoutSpaces},
-  "wordCount":wordCount,
+  "textLength":{"withSpaces":with_spaces(input),"withoutSpaces":without_spaces(input)},
+  "wordCount":word_count(input),
   "characterCount":character_count(input)});
+}
+function with_spaces(input){
+  /*if (input=='s+')
+    input = input.split('');
+  else
+    input = input.trim().split('');
+    var length = 0;
+    input.forEach(function(element) {
+    length++;
+    });
+    return length;*/
+    var count = 0;
+    for (let i=0;i<input.length;i++){
+      if (!input.charAt(i)=="\n")
+      console.log(input.charAt(i))
+      count += 1;
+    }
+  return count;
+}
+
+function word_count(input){
+  input = input.replace(/(^\s*)|(\s*$)/gi,"");
+  input = input.replace(/[ ]{2,}/gi," ");
+  input = input.replace(/\n /,"\n");
+  var wordCount=input.split(' ').length;
+  if (input=="") return 0
+  return wordCount;
+
+}
+
+function without_spaces(input){
+  input = input.replace(/(^\s*)|(\s*$)/gi,"");
+  input = input.replace(/[ ]{2,}/gi," ");
+  input = input.replace(/\n /,"");
+  var withoutSpaces=input.replace(/\s+/g, '').length;
+  return withoutSpaces
 }
 
 function character_count(input){
-//TODO:I should consider upper and lower case also
-//[{"e":2},{"h":1},{"i":1},{"l":2},{"m":1},{"o":1},{"s":1},{"t":1}]
+  var resultantList=[]
 var a=input.replace(/\s+/g, '').toLowerCase()
-var b= {};
+
 for (let i=0;i<a.length;i++){
+  var b= {};
+  if (isNaN(parseInt(a[i]))) {
     if((a.match(new RegExp(a[i], "g"))).length > 1){
         b[a[i]]=(a.match(new RegExp(a[i], "g"))).length;
     }
     if((a.match(new RegExp(a[i], "g"))).length == 1){
         b[a[i]]=1;
     }
+    resultantList.push(b)
+  }
 }
-//b.sort(function(first, second) { return first > second ? 1 : -1});
-return b
+
+return resultantList.sort(function(a, b) {return a > b;});
+
 }
 module.exports = router;

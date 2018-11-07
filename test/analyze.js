@@ -9,19 +9,38 @@ let should = chai.should();
 let app=require("../app");
 chai.use(chaiHttp);
 
-var dataString = 'hello 2 times';
 
   describe('/POST', () => {
-      it('There is an error in description of task, so it is 13 instead of 15', (done) => {
+    var dataString = 'hello 2 times  ';
+      it('Also, the list of characters in answers doesnt include number', (done) => {
         chai.request(app)
             .post('/analyze')
             .send({"text": dataString})
             .end((err, res) => {
                   res.should.have.status(400);
                   res.body.should.be.eql({
-                    "textLength":{"withSpaces":13,"withoutSpaces":11},
+                    "textLength":{"withSpaces":15,"withoutSpaces":11},
                     "wordCount":3,
                     "characterCount":[{"e":2},{"h":1},{"i":1},{"l":2},{"m":1},{"o":1},{"s":1},{"t":1}]
+                  });
+              done();
+            });
+      });
+  });
+
+
+  describe('/POST', () => {
+    var dataString = '   ';
+      it('Negative test', (done) => {
+        chai.request(app)
+            .post('/analyze')
+            .send({"text": dataString})
+            .end((err, res) => {
+                  res.should.have.status(400);
+                  res.body.should.be.eql({
+                    "textLength":{"withSpaces":3,"withoutSpaces":0},
+                    "wordCount":0,
+                    "characterCount":[]
                   });
               done();
             });
