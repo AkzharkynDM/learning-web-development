@@ -28,8 +28,7 @@ function with_spaces(input){
     var count = 0;
     for (let i=0;i<input.length;i++){
       if (!input.charAt(i)=="\n")
-      console.log(input.charAt(i))
-      count += 1;
+        count += 1;
     }
   return count;
 }
@@ -53,23 +52,28 @@ function without_spaces(input){
 }
 
 function character_count(input){
+  //var resultantList=[]
+  input=input.replace(/\s+/g, '').toLowerCase()
   var resultantList=[]
-var a=input.replace(/\s+/g, '').toLowerCase()
+  for (let i=0;i<input.length;i++){
 
-for (let i=0;i<a.length;i++){
-  var b= {};
-  if (isNaN(parseInt(a[i]))) {
-    if((a.match(new RegExp(a[i], "g"))).length > 1){
-        b[a[i]]=(a.match(new RegExp(a[i], "g"))).length;
+  if (isNaN(parseInt(input[i]))) {
+    if((input.match(new RegExp(input[i], "g"))).length > 1){
+      var element={letter:input[i], count:(input.match(new RegExp(input[i], "g"))).length};
+      if (!resultantList.includes(element))
+        resultantList.push(element);
     }
-    if((a.match(new RegExp(a[i], "g"))).length == 1){
-        b[a[i]]=1;
+    if((input.match(new RegExp(input[i], "g"))).length == 1){
+      var element={letter:input[i], count:1};
+      if (!resultantList.includes(element))
+        resultantList.push(element);
     }
-    resultantList.push(b)
+    }
   }
+  resultantList.sort(function(first, second) {return first.letter > second.letter;});
+
+  return resultantList;
+
 }
 
-return resultantList.sort(function(a, b) {return a > b;});
-
-}
 module.exports = router;
