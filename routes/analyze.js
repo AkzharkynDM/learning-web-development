@@ -10,21 +10,12 @@ function needed_response(req, res){
 var input=req.body.text
 console.error(req.body)
 
-res.status(400).json({
+res.status(200).json({
   "textLength":{"withSpaces":with_spaces(input),"withoutSpaces":without_spaces(input)},
   "wordCount":word_count(input),
   "characterCount":character_count(input)});
 }
 function with_spaces(input){
-  /*if (input=='s+')
-    input = input.split('');
-  else
-    input = input.trim().split('');
-    var length = 0;
-    input.forEach(function(element) {
-    length++;
-    });
-    return length;*/
     var count = 0;
     for (let i=0;i<input.length;i++){
       if (!input.charAt(i)=="\n")
@@ -51,8 +42,10 @@ function without_spaces(input){
   return withoutSpaces
 }
 
+
 function character_count(input){
   //var resultantList=[]
+  input=input.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"")
   input=input.replace(/\s+/g, '').toLowerCase()
   var resultantList=[]
   for (let i=0;i<input.length;i++){
@@ -70,9 +63,10 @@ function character_count(input){
     }
     }
   }
-  for (let i=0;i<resultantList.length;i++){
-    console.log(resultantList[i].letter)
-  }
+  //for (let i=0;i<resultantList.length;i++){
+  //  console.log(resultantList[i].letter)
+  //}
+
   resultantList.sort(function(first, second) {return first.letter > second.letter;});
 
   var resultantListNoDub = resultantList.reduce((unique, o) => {
@@ -81,7 +75,18 @@ function character_count(input){
       }
       return unique;
   },[]);
-  return resultantListNoDub;
+
+  //for (let i=0;i<resultantListNoDub.length;i++){
+  //  console.log(resultantListNoDub[i].letter)
+  //}
+  var resultantProperListNoDub=[]
+  for (let i=0;i<resultantListNoDub.length;i++){
+    var obj = {};
+    obj[resultantListNoDub[i].letter] = resultantListNoDub[i].count;
+    console.log( obj[resultantListNoDub[i].count]);
+    resultantProperListNoDub.push(obj)
+}
+  return resultantProperListNoDub;
 
 }
 

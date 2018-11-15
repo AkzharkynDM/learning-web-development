@@ -17,7 +17,7 @@ chai.use(chaiHttp);
             .post('/analyze')
             .send({"text": dataString})
             .end((err, res) => {
-                  res.should.have.status(400);
+                  res.should.have.status(200);
                   res.body.should.be.eql({
                     "textLength":{"withSpaces":15,"withoutSpaces":11},
                     "wordCount":3,
@@ -36,7 +36,7 @@ chai.use(chaiHttp);
             .post('/analyze')
             .send({"text": dataString})
             .end((err, res) => {
-                  res.should.have.status(400);
+                  res.should.have.status(200);
                   res.body.should.be.eql({
                     "textLength":{"withSpaces":3,"withoutSpaces":0},
                     "wordCount":0,
@@ -44,5 +44,23 @@ chai.use(chaiHttp);
                   });
               done();
             });
+          });
       });
+
+      describe('/POST', () => {
+        var dataString = 'hello 4';
+          it('Punctuation chars must be omitted check', (done) => {
+            chai.request(app)
+                .post('/analyze')
+                .send({"text": dataString})
+                .end((err, res) => {
+                      res.should.have.status(200);
+                      res.body.should.be.eql({
+                        "textLength":{"withSpaces":7,"withoutSpaces":6},
+                        "wordCount":2,
+                        "characterCount":[{"e":1},{"h":1},{"l":2},{"o":1}]
+                      });
+                  done();
+                });
+          });
   });
