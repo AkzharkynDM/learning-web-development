@@ -67,7 +67,7 @@ function character_count(input){
   //  console.log(resultantList[i].letter)
   //}
 
-  resultantList.sort(function(first, second) {return first.letter > second.letter;});
+  resultantList=resultantList.sort(function(first, second) {return first.letter > second.letter;});
 
   var resultantListNoDub = resultantList.reduce((unique, o) => {
       if(!unique.some(obj => obj.letter === o.letter && obj.count === o.count)) {
