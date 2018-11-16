@@ -25,17 +25,14 @@ function with_spaces(input){
 }
 
 function word_count(input){
-  //input = input.replace(/\n(^\s*)|(\s*$)/gi,"");
-  //input=input.replace(/\s+/g, '')
-  var word_count=input.trim().split(/\s+/).length;
-  console.log(input.split(/\s+/))
+  var word_count=input.trim()
+                .split(/\s+/)
+                .filter(function(word) { return word != '' }).length;
   return word_count;
 
 }
 
 function without_spaces(input){
-  input = input.replace(/\n(^\s*)|(\s*$)/gi,"");
-  input = input.replace(/[ ]{2,}/gi," ");
   var without_spaces=input.replace(/\s+/g, '').length;
   return without_spaces
 }
@@ -57,10 +54,8 @@ function character_count(input){
   }
   let map_asc = new Map([...map.entries()].sort());
 
-  //console.log(mapAsc)
   to_return=[]
   for (const [k, v] of map_asc.entries()) {
-    //console.log(k, v)
     var obj = {}
     obj[k]=v
     to_return.push(obj)
