@@ -64,3 +64,53 @@ chai.use(chaiHttp);
                 });
           });
   });
+
+  describe('/POST', () => {
+    var data_string = " trailing spaces...     ";
+      it('Punctuation chars must be omitted check', (done) => {
+        chai.request(app)
+            .post('/analyze')
+            .send({"text": data_string})
+            .end((err, res) => {
+                  //res.should.have.status(200);
+                  res.body.should.be.eql({
+                    "textLength":{"withSpaces":24,"withoutSpaces":17},
+                    "wordCount":2,
+                    "characterCount":[{
+                    "a": 2
+                },
+                {
+                    "c": 1
+                },
+                {
+                    "e": 1
+                },
+                {
+                    "g": 1
+                },
+                {
+                    "i": 2
+                },
+                {
+                    "l": 1
+                },
+                {
+                    "n": 1
+                },
+                {
+                    "p": 1
+                },
+                {
+                    "r": 1
+                },
+                {
+                    "s": 2
+                },
+                {
+                    "t": 1
+                }]
+                  });
+              done();
+            });
+      });
+});

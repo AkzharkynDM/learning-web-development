@@ -25,9 +25,10 @@ function with_spaces(input){
 }
 
 function word_count(input){
-  input = input.replace(/\n(^\s*)|(\s*$)/gi,"");
-  var word_count=input.split(' ').length;
-  if (input=="") return 0
+  //input = input.replace(/\n(^\s*)|(\s*$)/gi,"");
+  //input=input.replace(/\s+/g, '')
+  var word_count=input.trim().split(/\s+/).length;
+  console.log(input.split(/\s+/))
   return word_count;
 
 }
