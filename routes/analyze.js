@@ -10,7 +10,7 @@ function needed_response(req, res){
 var input=req.body.text
 console.error(req.body)
 
-res.status(200).json({
+res.json({
   "textLength":{"withSpaces":with_spaces(input),"withoutSpaces":without_spaces(input)},
   "wordCount":word_count(input),
   "characterCount":character_count(input)});
