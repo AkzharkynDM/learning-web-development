@@ -25,69 +25,46 @@ function with_spaces(input){
 }
 
 function word_count(input){
-  input = input.replace(/(^\s*)|(\s*$)/gi,"");
-  input = input.replace(/[ ]{2,}/gi," ");
-  input = input.replace(/\n /,"\n");
-  var wordCount=input.split(' ').length;
+  input = input.replace(/\n(^\s*)|(\s*$)/gi,"");
+  var word_count=input.split(' ').length;
   if (input=="") return 0
-  return wordCount;
+  return word_count;
 
 }
 
 function without_spaces(input){
-  input = input.replace(/(^\s*)|(\s*$)/gi,"");
+  input = input.replace(/\n(^\s*)|(\s*$)/gi,"");
   input = input.replace(/[ ]{2,}/gi," ");
-  input = input.replace(/\n /,"");
-  var withoutSpaces=input.replace(/\s+/g, '').length;
-  return withoutSpaces
+  var without_spaces=input.replace(/\s+/g, '').length;
+  return without_spaces
 }
 
 
 function character_count(input){
-  //var resultantList=[]
-  input=input.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"")
-  input=input.replace(/\s+/g, '').toLowerCase()
-  var resultantList=[]
+  input=input.replace(/[^a-zA-Z]+/g, '').toLowerCase()
+  const map = new Map()
+
   for (let i=0;i<input.length;i++){
 
-  if (isNaN(parseInt(input[i]))) {
     if((input.match(new RegExp(input[i], "g"))).length > 1){
-      var element={letter:input[i], count:(input.match(new RegExp(input[i], "g"))).length};
-      if (resultantList.includes(element)) continue
-        resultantList.push(element);
+    map.set(input[i], input.match(new RegExp(input[i], "g")).length)
     }
     if((input.match(new RegExp(input[i], "g"))).length == 1){
-      var element={letter:input[i], count:1};
-      if (resultantList.includes(element)) continue
-        resultantList.push(element);
+      map.set(input[i], 1)
     }
-    }
+
   }
-  //for (let i=0;i<resultantList.length;i++){
-  //  console.log(resultantList[i].letter)
-  //}
+  let map_asc = new Map([...map.entries()].sort());
 
-  resultantList=resultantList.sort(function(first, second) {return first.letter > second.letter;});
-
-  var resultantListNoDub = resultantList.reduce((unique, o) => {
-      if(!unique.some(obj => obj.letter === o.letter && obj.count === o.count)) {
-        unique.push(o);
-      }
-      return unique;
-  },[]);
-
-  //for (let i=0;i<resultantListNoDub.length;i++){
-  //  console.log(resultantListNoDub[i].letter)
-  //}
-  var resultantProperListNoDub=[]
-  for (let i=0;i<resultantListNoDub.length;i++){
-    var obj = {};
-    obj[resultantListNoDub[i].letter] = resultantListNoDub[i].count;
-    console.log( obj[resultantListNoDub[i].count]);
-    resultantProperListNoDub.push(obj)
-}
-  return resultantProperListNoDub;
-
+  //console.log(mapAsc)
+  to_return=[]
+  for (const [k, v] of map_asc.entries()) {
+    //console.log(k, v)
+    var obj = {}
+    obj[k]=v
+    to_return.push(obj)
+  }
+  return to_return
 }
 
 
